@@ -1,17 +1,17 @@
 var palabras = ["ALURA", "ORACLE","HOLA"]
 var boton2 = document.getElementById("nueva-palabra")
 var boton1 =document.getElementById("iniciar-juego")
-var x =450
+var x =850
 var y =50
 var msg = ''
 var inicio = 0;
 var horca;
 var respuesta = [];
 var  cara = 0 ;
-var intentos = 6;
+var intentos = 1;
 var aciertos = 0;
-
-
+var pantalla = document.querySelector("canvas");
+                var pincel = pantalla.getContext("2d");
 
 
 boton2.onclick = agregarPalabra;
@@ -37,12 +37,20 @@ boton1.onclick = elegirPalabra;
         console.log(horca);
         dibujarLineas(horca.length);
         respuesta.splice(0,respuesta.length);
-        x = 450;
+        x = 850;
         y = 50;
         cara = 0;
         aciertos = 0;
         intentos = 0;
-
+        var btn = document.querySelector("#nueva-palabra")
+        btn.disabled = true;
+            
+            var img = new Image();
+            img.src = "img/"+0+".jpg";
+            img.onload = function(){
+            pincel.drawImage(img,30,50);
+            
+            }
 
     }
 
@@ -55,7 +63,7 @@ boton1.onclick = elegirPalabra;
                 
                 var pantalla = document.querySelector("canvas");
                 var pincel = pantalla.getContext("2d");
-            if(intentos < 6){
+            
 
              renglones();
             var elCaracter = String.fromCharCode(evObject.which);
@@ -78,13 +86,41 @@ boton1.onclick = elegirPalabra;
                             pincel.strokeStyle = "black";
                             pincel.strokeText(elCaracter,x,y);   
                             x = x + 40;
+
+                            var img = new Image();
+                            img.src = "img/"+intentos+".jpg";
+                            img.onload = function(){
+                            pincel.drawImage(img,30,50);
+                            
+                            if (intentos == 6){
+                                pincel.strokeStyle = "red";
+                                pincel.strokeText(("No tienes mas intentos"),550,(y+50));
+                                inicio = 0;
+                                var btn = document.querySelector("#nueva-palabra")
+                                btn.disabled = false;
+                                incio = 0;
+
+
+                            } 
+
+                        }
                             
                     }
                     
                     if (aciertos == horca.length){
                         pincel.strokeStyle = "green";
-                        pincel.strokeText(("Juego Ganado"),450,(y+50));
+                        pincel.strokeText(("Juego Ganado"),550,(y+50));
                         inicio = 0;
+                        var btn = document.querySelector("#nueva-palabra")
+                        btn.disabled = false;
+
+                            var img = new Image();
+                            img.src = "img/"+7+".jpg";
+                            img.onload = function(){
+                            pincel.drawImage(img,30,50);
+                            
+                                }
+
                     }
 
 
@@ -98,17 +134,13 @@ boton1.onclick = elegirPalabra;
 
 
             
-        }else{
-            pincel.strokeStyle = "red";
-            pincel.strokeText(("No tienes mas intentos"),450,(y+50));
-            inicio = 0;
         }
-        }
+        
     }   
         
         function renglones(){
             if (x > 1100){
-                x = 450
+                x = 850
                 y = y + 50
             }
         }
@@ -144,7 +176,7 @@ boton1.onclick = elegirPalabra;
     function dibujarLineas(cantL){
 
 
-        var g=200;
+        var g=500;
         var pantalla = document.querySelector("canvas");
         var pincel = pantalla.getContext("2d");
         pincel.clearRect(0, 0,pantalla.width,pantalla.height);
@@ -183,19 +215,23 @@ function validarCaracter(elCaracter){
         pincel.strokeStyle = "black";
         
         if (elCaracter == horca.substring(i, i+1)) {
-            pincel.strokeText(msg,(210 +(i*100)),380);
+            pincel.strokeText(msg,(510 +(i*100)),380);
             
             
             cara = 1;
             aciertos = aciertos + 1
-
-           
+            var img = new Image();
+            img.src = "img/"+0+".jpg";
+            img.onload = function(){
+            pincel.drawImage(img,30,50);
+            
+           }
 
 
         }
 
         }
-        console.log(aciertos)
+        
         
 
 }
